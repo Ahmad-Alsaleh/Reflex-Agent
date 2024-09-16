@@ -1,5 +1,7 @@
 import turtle
 
+from rich import print as pprint
+
 from configs import settings
 
 
@@ -28,6 +30,9 @@ class Agent:
         return self._current_position == settings.goal_position
 
     def move_forward(self) -> None:
+        if self.is_in_front_of_wall():
+            pprint("[red]ERROR:[/] Cannot move forward. There is a wall in front.")
+            return
         direction_map = {0: (1, 0), 90: (0, 1), 180: (-1, 0), 270: (0, -1)}
         dx, dy = direction_map[int(self._agent.heading())]
         x, y = self._current_position

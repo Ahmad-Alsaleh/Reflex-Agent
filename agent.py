@@ -5,6 +5,18 @@ from rich import print as pprint
 from configs import settings
 
 
+def check_wall(x: int, y: int, heading: float) -> bool:
+    if heading == 0:
+        return x == settings.num_of_cells - 1
+    elif heading == 90:
+        return y == settings.num_of_cells - 1
+    elif heading == 180:
+        return x == 0
+    elif heading == 270:
+        return y == 0
+    raise ValueError(f"Invalid heading: {heading}. Must be one of [0, 90, 180, 270]")
+
+
 class Agent:
     def __init__(self) -> None:
         self._agent = turtle.Turtle()
@@ -30,7 +42,7 @@ class Agent:
         return self._current_position == settings.goal_position
 
     def move_forward(self) -> None:
-        if self.is_in_front_of_wall():
+        if self.check_wall_in_front():
             pprint("[red]ERROR:[/] Cannot move forward. There is a wall in front.")
             return
         direction_map = {0: (1, 0), 90: (0, 1), 180: (-1, 0), 270: (0, -1)}
@@ -45,18 +57,20 @@ class Agent:
     def turn_right(self) -> None:
         self._agent.right(90)
 
-    def stop(self) -> None:
-        turtle.done()
-
-    def is_in_front_of_wall(self) -> bool:
+    def check_wall_in_front(self) -> bool:
         x, y = self._current_position
         heading = self._agent.heading()
-        if heading == 0:
-            return x == settings.num_of_cells - 1
-        elif heading == 90:
-            return y == settings.num_of_cells - 1
-        elif heading == 180:
-            return x == 0
-        elif heading == 270:
-            return y == 0
-        return False
+        return check_wall(x, y, heading)
+
+    def check_wall_on_left(self) -> bool:
+        x, y = self._current_position
+        heading = self._agent.heading()
+        return check_wall(x, y, heading + 90)
+
+    def check_wall_on_right(self) -> bool:
+        x, y = self._current_position
+        heading = self._agent.heading()
+        return check_wall(x, y, heading - 90)
+
+    def stop(self) -> None:
+        turtle.done()

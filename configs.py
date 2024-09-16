@@ -21,7 +21,7 @@ class _Settings(BaseSettings):
 
     @model_validator(mode="after")
     def validate_agent_position(self) -> Self:
-        if not all(0 <= coord < self.num_of_cells for coord in self.goal_position):
+        if not all(-1 <= coord <= self.num_of_cells for coord in self.goal_position):
             raise ValueError(
                 f"GOAL_POSITION = {self.goal_position} is out of bounds. "
                 f"Should be between 0 and {self.num_of_cells - 1}"

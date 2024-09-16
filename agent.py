@@ -29,7 +29,7 @@ class Agent:
 
     def move_forward(self) -> None:
         direction_map = {0: (1, 0), 90: (0, 1), 180: (-1, 0), 270: (0, -1)}
-        dx, dy = direction_map[self._agent.heading()]
+        dx, dy = direction_map[int(self._agent.heading())]
         x, y = self._current_position
         self._current_position = (x + dx, y + dy)
         self._agent.forward(settings.cell_size)
@@ -45,11 +45,13 @@ class Agent:
 
     def is_in_front_of_wall(self) -> bool:
         x, y = self._current_position
-        if self._agent.heading() == 0:
+        heading = self._agent.heading()
+        if heading == 0:
             return x == settings.num_of_cells - 1
-        elif self._agent.heading() == 90:
+        elif heading == 90:
             return y == settings.num_of_cells - 1
-        elif self._agent.heading() == 180:
+        elif heading == 180:
             return x == 0
-        elif self._agent.heading() == 270:
+        elif heading == 270:
             return y == 0
+        return False

@@ -43,14 +43,14 @@ def _draw_grid(pen: Pen) -> None:
         _draw_vertical_line(pen, position)
 
 
-def _draw_horizontal_line(pen: Pen, position: int) -> None:
+def _draw_horizontal_line(pen: Pen, position: float) -> None:
     pen.penup()
     pen.goto(-settings.window_size / 2, position)
     pen.pendown()
     pen.goto(settings.window_size / 2, position)
 
 
-def _draw_vertical_line(pen: Pen, position: int) -> None:
+def _draw_vertical_line(pen: Pen, position: float) -> None:
     pen.penup()
     pen.goto(position, -settings.window_size / 2)
     pen.pendown()

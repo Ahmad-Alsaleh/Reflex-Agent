@@ -16,7 +16,7 @@ class _Settings(BaseSettings):
     agent_init_position: tuple[int, int]
 
     @property
-    def cell_size(self) -> int:
+    def cell_size(self) -> float:
         return self.window_size / self.num_of_cells
 
     @model_validator(mode="after")
@@ -43,4 +43,4 @@ class _Settings(BaseSettings):
         env_file = "game.config"
 
 
-settings = _Settings()
+settings = _Settings()  # type: ignore[call-arg]

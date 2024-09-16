@@ -6,6 +6,10 @@ from pydantic_settings import BaseSettings
 from rich import print as pprint
 
 
+def _get_random_point(num_of_cells: int) -> tuple[int, int]:
+    return tuple(random.randrange(num_of_cells) for _ in range(2))
+
+
 class _Settings(BaseSettings):
     app_name: str
     background_color: str
@@ -17,44 +21,48 @@ class _Settings(BaseSettings):
     goal_color: str
     agent_init_position: tuple[int, int] | Literal["random"]
 
+    @property
+    def cell_size(self) -> int:
+        return self.window_size / self.num_of_cells
 
     @model_validator(mode="after")
     def validate_CELL_SIZE(self) -> Self:
-        # check if CELL_SIZE is an even number
-        if self.CELL_SIZE % 2:
-            self.CELL_SIZE += 1
+        if self.goal_position == "random":
+            self.goal_position: tuple[int, int] = _get_random_point(self.num_of_cells)
+            while self.agent_init_position == self.goal_position:
+                self.goal_position = _get_random_point(self.num_of_cells)
             pprint(
-                "[bold yellow]WARNING:[/] `CELL_SIZE` should be an even number. "
-                f"The value `CELL_SIZE = {self.CELL_SIZE}` will be used instead of the provided value."
+                f"[bold blue]INFO:[/] Using random `GOAL_POSITION = {self.goal_position}`"
+            )
+        elif not all(0 <= coord < self.num_of_cells for coord in self.goal_position):
+            raise ValueError(
+                f"GOAL_POSITION = {self.goal_position} is out of bounds. "
+                f"Should be between 0 and {self.num_of_cells - 1}"
             )
 
-        # check if MAP_SIZE is a multiple of CELL_SIZE
-        if self.MAP_SIZE % self.CELL_SIZE:
-            self.MAP_SIZE = self.MAP_SIZE - self.MAP_SIZE % self.CELL_SIZE
+        if self.agent_init_position == "random":
+            self.agent_init_position: tuple[int, int] = _get_random_point(
+                self.num_of_cells
+            )
+            while self.agent_init_position == self.goal_position:
+                self.agent_init_position = _get_random_point(self.num_of_cells)
             pprint(
-                "[bold yellow]WARNING:[/] `MAP_SIZE` should be a multiple of `CELL_SIZE`. "
-                f"The value `MAP_SIZE = {self.MAP_SIZE}` will be used instead of the provided value."
+                f"[bold blue]INFO:[/] Using random `AGENT_INIT_POSITION = {self.agent_init_position}`"
+            )
+        elif not all(
+            0 <= coord < self.num_of_cells for coord in self.agent_init_position
+        ):
+            raise ValueError(
+                f"AGENT_INIT_POSITION = {self.agent_init_position} is out of bounds. "
+                f"Should be between 0 and {self.num_of_cells - 1}"
             )
 
-        if self.GOAL_POSITION == "random":
-            self.GOAL_POSITION: tuple[int, int] = tuple(
-                random.randrange(
-                    -self.MAP_SIZE // 2, self.MAP_SIZE // 2, self.CELL_SIZE
-                )
-                for _ in range(2)
+        if self.goal_position == self.agent_init_position:
+            raise ValueError(
+                f"GOAL_POSITION and AGENT_INIT_POSITION cannot be the same. "
+                f"GOAL_POSITION = {self.goal_position}, AGENT_INIT_POSITION = {self.agent_init_position}"
             )
-            pprint(f"[bold blue]INFO:[/] Random `GOAL_POSITION = {self.GOAL_POSITION}`")
 
-        # check if GOAL_POSITION is a multiple of CELL_SIZE
-        elif any(coordinate % self.CELL_SIZE for coordinate in self.GOAL_POSITION):
-            self.GOAL_POSITION = tuple(
-                coordinate - coordinate % self.CELL_SIZE
-                for coordinate in self.GOAL_POSITION
-            )
-            pprint(
-                "[bold yellow]WARNING:[/] `GOAL_POSITION` should be a multiple of `CELL_SIZE`. "
-                f"The value `GOAL_POSITION = {self.GOAL_POSITION}` will be used instead of the provided value."
-            )
         return self
 
     class Config:

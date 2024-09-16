@@ -6,16 +6,32 @@ from configs import settings
 class Agent:
     def __init__(self) -> None:
         self._agent = turtle.Turtle()
-        if (settings.MAP_SIZE / settings.CELL_SIZE) % 2 == 0:
-            self._agent.penup()
-            self._agent.goto(settings.CELL_SIZE / 2, settings.CELL_SIZE / 2)
-            self._agent.pendown()
+        self._agent.shapesize(2, 2)
+        self._current_position = settings.agent_init_position
+        self._go_to_cell(self._current_position)
+
+    def _go_to_cell(self, cell_coordinates: tuple[int, int]) -> None:
+        x, y = [
+            (coord - settings.num_of_cells // 2) * settings.cell_size
+            for coord in cell_coordinates
+        ]
+        if settings.num_of_cells % 2 == 0:
+            x += settings.cell_size / 2
+            y += settings.cell_size / 2
+        self._agent.penup()
+        turtle.tracer(0)
+        self._agent.goto(x, y)
+        self._agent.pendown()
+        turtle.tracer(1, 40)
 
     def reached_goal(self) -> bool:
-        if tuple(map(int, self._agent.pos())) == settings.goal_position:
-            return True
+        return self._current_position == settings.goal_position
 
     def move_forward(self) -> None:
+        direction_map = {0: (1, 0), 90: (0, 1), 180: (-1, 0), 270: (0, -1)}
+        dx, dy = direction_map[self._agent.heading()]
+        x, y = self._current_position
+        self._current_position = (x + dx, y + dy)
         self._agent.forward(settings.cell_size)
 
     def turn_left(self) -> None:
@@ -28,11 +44,12 @@ class Agent:
         turtle.done()
 
     def is_in_front_of_wall(self) -> bool:
-        x, y = self._agent.pos()
-        map_boundary = settings.MAP_SIZE / 2
-        return (
-            x <= -map_boundary
-            or x >= map_boundary
-            or y <= -map_boundary
-            or y >= map_boundary
-        )
+        x, y = self._current_position
+        if self._agent.heading() == 0:
+            return x == settings.num_of_cells - 1
+        elif self._agent.heading() == 90:
+            return y == settings.num_of_cells - 1
+        elif self._agent.heading() == 180:
+            return x == 0
+        elif self._agent.heading() == 270:
+            return y == 0

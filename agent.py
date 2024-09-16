@@ -6,6 +6,7 @@ from configs import settings
 
 
 def check_wall(x: int, y: int, heading: float) -> bool:
+    heading = heading % 360
     if heading == 0:
         return x == settings.num_of_cells - 1
     elif heading == 90:
@@ -14,7 +15,9 @@ def check_wall(x: int, y: int, heading: float) -> bool:
         return x == 0
     elif heading == 270:
         return y == 0
-    raise ValueError(f"Invalid heading: {heading}. Must be one of [0, 90, 180, 270]")
+    raise ValueError(
+        f"Invalid `heading`: {heading}. Must be one of `[0, 90, 180, 270]`"
+    )
 
 
 class Agent:

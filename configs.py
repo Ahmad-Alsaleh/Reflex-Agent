@@ -7,14 +7,16 @@ from rich import print as pprint
 
 
 class _Settings(BaseSettings):
-    APP_NAME: str
-    BACKGROUND_COLOR: str
-    GRID_COLOR: str
-    GRID_THICKNESS: int
-    MAP_SIZE: int
-    CELL_SIZE: int
-    GOAL_POSITION: tuple[int, int] | Literal["random"]
-    GOAL_COLOR: str
+    app_name: str
+    background_color: str
+    grid_color: str
+    grid_thickness: int
+    window_size: int
+    num_of_cells: int
+    goal_position: tuple[int, int] | Literal["random"]
+    goal_color: str
+    agent_init_position: tuple[int, int] | Literal["random"]
+
 
     @model_validator(mode="after")
     def validate_CELL_SIZE(self) -> Self:

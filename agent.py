@@ -12,11 +12,11 @@ class Agent:
             self._agent.pendown()
 
     def reached_goal(self) -> bool:
-        if tuple(map(int, self._agent.pos())) == settings.GOAL_POSITION:
+        if tuple(map(int, self._agent.pos())) == settings.goal_position:
             return True
 
     def move_forward(self) -> None:
-        self._agent.forward(settings.CELL_SIZE)
+        self._agent.forward(settings.cell_size)
 
     def turn_left(self) -> None:
         self._agent.left(90)

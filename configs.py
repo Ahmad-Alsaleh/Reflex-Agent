@@ -66,7 +66,7 @@ class _Settings(BaseSettings):
         return self
 
     class Config:
-        env_file = "config.env"
+        env_file = "game.config"
 
 
 settings = _Settings()

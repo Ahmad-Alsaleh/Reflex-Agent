@@ -5,7 +5,8 @@ from rich import print as pprint
 from configs import settings
 
 
-def check_wall(x: int, y: int, heading: float) -> bool:
+def check_wall(current_position: tuple[int, int], heading: float) -> bool:
+    x, y = current_position
     heading = heading % 360
     if heading == 0:
         return x == settings.num_of_cells - 1
@@ -61,19 +62,13 @@ class Agent:
         self._agent.right(90)
 
     def check_wall_in_front(self) -> bool:
-        x, y = self._current_position
-        heading = self._agent.heading()
-        return check_wall(x, y, heading)
+        return check_wall(self._current_position, self._heading)
 
     def check_wall_on_left(self) -> bool:
-        x, y = self._current_position
-        heading = self._agent.heading()
-        return check_wall(x, y, heading + 90)
+        return check_wall(self._current_position, self._heading + 90)
 
     def check_wall_on_right(self) -> bool:
-        x, y = self._current_position
-        heading = self._agent.heading()
-        return check_wall(x, y, heading - 90)
+        return check_wall(self._current_position, self._heading - 90)
 
     def stop(self) -> None:
         turtle.done()

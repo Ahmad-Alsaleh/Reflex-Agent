@@ -1,4 +1,5 @@
 import turtle
+from typing import Literal
 
 from rich import print as pprint
 
@@ -42,6 +43,15 @@ class Agent:
         self._agent.pendown()
         turtle.tracer(1, 40)
 
+    @property
+    def _heading(self) -> Literal[0, 90, 180, 270]:
+        heading = int(self._agent.heading())
+        if heading not in (0, 90, 180, 270):
+            raise ValueError(
+                f"Invalid heading: {heading}. Must be one of `[0, 90, 180, 270]`"
+            )
+        return heading  # type: ignore[return-value]
+
     def reached_goal(self) -> bool:
         return self._current_position == settings.goal_position
 
@@ -50,9 +60,9 @@ class Agent:
             pprint("[red]ERROR:[/] Cannot move forward. There is a wall in front.")
             return
         direction_map = {0: (1, 0), 90: (0, 1), 180: (-1, 0), 270: (0, -1)}
-        dx, dy = direction_map[int(self._agent.heading())]
-        x, y = self._current_position
-        self._current_position = (x + dx, y + dy)
+        dx, dy = direction_map[self._heading]
+        current_x, current_y = self._current_position
+        self._current_position = (current_x + dx, current_y + dy)
         self._agent.forward(settings.cell_size)
 
     def turn_left(self) -> None:

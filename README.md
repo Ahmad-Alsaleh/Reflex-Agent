@@ -43,10 +43,10 @@ Game settings can be configured in the `game.config` file. Here are the availabl
 
 ### Main Settings
 
-| Parameter             | Description                               | Note                                              | Default    |
-|-----------------------|-------------------------------------------|---------------------------------------------------|------------|
-| `AGENT_INIT_POSITION` | Initial position of the agent on the grid | None                                              | `[2, 3]`   |
-| `GOAL_POSITION`       | Position of the goal on the grid          | `-1` and `NUM_OF_CELLS + 1` values are allowed    | `[3, 6]`   |
+| Parameter             | Description                               | Note                                  | Default  |
+|-----------------------|-------------------------------------------|---------------------------------------|----------|
+| `AGENT_INIT_POSITION` | Initial position of the agent on the grid | None                                  | `[2, 3]` |
+| `GOAL_POSITION`       | Position of the goal on the grid          | -1 and `NUM_OF_CELLS` + 1 are allowed | `[3, 6]` |
 
 ### Visual Settings (Optional)
 

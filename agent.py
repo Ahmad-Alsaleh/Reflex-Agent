@@ -41,7 +41,7 @@ class Agent:
         turtle.tracer(0)
         self._agent.goto(x, y)
         self._agent.pendown()
-        turtle.tracer(1, 40)
+        turtle.tracer(1, 70)
 
     @property
     def _heading(self) -> Literal[0, 90, 180, 270]:

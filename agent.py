@@ -1,4 +1,5 @@
 import turtle
+from enum import Enum
 from typing import Literal
 
 from rich import print as pprint
@@ -6,20 +7,10 @@ from rich import print as pprint
 from configs import settings
 
 
-def check_wall(current_position: tuple[int, int], heading: float) -> bool:
-    x, y = current_position
-    heading = heading % 360
-    if heading == 0:
-        return x == settings.num_of_cells - 1
-    elif heading == 90:
-        return y == settings.num_of_cells - 1
-    elif heading == 180:
-        return x == 0
-    elif heading == 270:
-        return y == 0
-    raise ValueError(
-        f"Invalid `heading`: {heading}. Must be one of `[0, 90, 180, 270]`"
-    )
+class Direction(Enum):
+    FRONT = 0
+    RIGHT = -90
+    LEFT = 90
 
 
 class Agent:
@@ -52,17 +43,26 @@ class Agent:
             )
         return heading  # type: ignore[return-value]
 
+    def _check_obstacle(self, position: tuple[int, int]) -> bool:
+        if position in settings.obstacles_positions:
+            return True
+        return not all(0 <= coord < settings.num_of_cells for coord in position)
+
+    def _calculate_new_position(self, move_direction: Direction) -> tuple[int, int]:
+        direction_map = {0: (1, 0), 90: (0, 1), 180: (-1, 0), 270: (0, -1)}
+        delta_x, delta_y = direction_map[(self._heading + move_direction.value) % 360]
+        current_x, current_y = self._current_position
+        return current_x + delta_x, current_y + delta_y
+
     def reached_goal(self) -> bool:
         return self._current_position == settings.goal_position
 
     def move_forward(self) -> None:
-        if self.check_wall_in_front():
+        new_position = self._calculate_new_position(Direction.FRONT)
+        if self._check_obstacle(new_position):
             pprint("[red]ERROR:[/] Cannot move forward. There is a wall in front.")
             return
-        direction_map = {0: (1, 0), 90: (0, 1), 180: (-1, 0), 270: (0, -1)}
-        dx, dy = direction_map[self._heading]
-        current_x, current_y = self._current_position
-        self._current_position = (current_x + dx, current_y + dy)
+        self._current_position = new_position
         self._agent.forward(settings.cell_size)
 
     def turn_left(self) -> None:
@@ -72,13 +72,16 @@ class Agent:
         self._agent.right(90)
 
     def check_wall_in_front(self) -> bool:
-        return check_wall(self._current_position, self._heading)
+        new_position = self._calculate_new_position(Direction.FRONT)
+        return self._check_obstacle(new_position)
 
     def check_wall_on_left(self) -> bool:
-        return check_wall(self._current_position, self._heading + 90)
+        new_position = self._calculate_new_position(Direction.RIGHT)
+        return self._check_obstacle(new_position)
 
     def check_wall_on_right(self) -> bool:
-        return check_wall(self._current_position, self._heading - 90)
+        new_position = self._calculate_new_position(Direction.LEFT)
+        return self._check_obstacle(new_position)
 
     def stop(self) -> None:
         turtle.done()

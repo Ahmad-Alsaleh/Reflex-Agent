@@ -44,6 +44,8 @@ class Agent:
         return heading  # type: ignore[return-value]
 
     def _check_obstacle(self, position: tuple[int, int]) -> bool:
+        if position == settings.goal_position:
+            return False
         if position in settings.obstacles_positions:
             return True
         return not all(0 <= coord < settings.num_of_cells for coord in position)

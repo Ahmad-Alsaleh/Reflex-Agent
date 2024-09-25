@@ -1,5 +1,7 @@
 # Reflex Agent
 
+<img width="847" alt="Reflex-Agent-Demo" src="https://github.com/user-attachments/assets/4e597de8-0249-4e58-bc47-c2e1e2c91e80">
+
 ## Overview
 
 Reflex Agent is a simple grid-based game designed for the AI course (CMP 333) at the American University of Sharjah, UAE. In the game, the students should write a set of rules to navigate an agent to reach a goal autonomously. The game is built using Python and the Turtle graphics library.

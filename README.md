@@ -43,22 +43,24 @@ Game settings can be configured in the `game.config` file. Here are the availabl
 
 ### Main Settings
 
-| Parameter             | Description                               | Note                                  | Default  |
-|-----------------------|-------------------------------------------|---------------------------------------|----------|
-| `AGENT_INIT_POSITION` | Initial position of the agent on the grid | None                                  | `[2, 3]` |
-| `GOAL_POSITION`       | Position of the goal on the grid          | -1 and `NUM_OF_CELLS` + 1 are allowed | `[3, 6]` |
+| Parameter             | Description                               | Note                                                                          | Default                       |
+|-----------------------|-------------------------------------------|-------------------------------------------------------------------------------|-------------------------------|
+| `AGENT_INIT_POSITION` | Initial position of the agent on the grid | None                                                                          | `[2, 3]`                      |
+| `GOAL_POSITION`       | Position of the goal on the grid          | -1 and `NUM_OF_CELLS` + 1 are allowed if the goal is on the border of the map | `[3, 6]`                      |
+| `NUM_OF_CELLS`        | Number of cells in the grid               | This is the number of cells per side                                          | `6`                           |
+| `OBSTACLES_POSITIONS` | Positions of each obstacle                | Each [x, y] point corresponds to one obstacle                                 | `[[4, 3], [4, 4], [3, 4]]`    |
 
 ### Visual Settings (Optional)
 
-| Parameter          | Description                          | Note                                  | Default           |
-|--------------------|--------------------------------------|---------------------------------------|-------------------|
-| `APP_NAME`         | Name of the application              | Used as the window name of the game   | `"Reflex Agent"`  |
-| `NUM_OF_CELLS`     | Number of cells in the grid          | This is the number of cells per side  | `6`               |
-| `WINDOW_SIZE`      | Size of the game window              | None                                  | `500`             |
-| `BACKGROUND_COLOR` | Background color of the game window  | None                                  | `"white"`         |
-| `GOAL_COLOR`       | Color of the goal                    | None                                  | `"green"`         |
-| `GRID_COLOR`       | Color of the grid lines              | None                                  | `"gray"`          |
-| `GRID_THICKNESS`   | Thickness of the grid lines          | None                                  | `5`               |
+| Parameter          | Description                                  | Default           |
+|--------------------|----------------------------------------------|-------------------|
+| `APP_NAME`         | The name of the window of the application    | `"Reflex Agent"`  |
+| `WINDOW_SIZE`      | Size of the game window                      | `500`             |
+| `BACKGROUND_COLOR` | Background color of the game window          | `"white"`         |
+| `GOAL_COLOR`       | Color of the goal                            | `"green"`         |
+| `GRID_COLOR`       | Color of the grid lines                      | `"gray"`          |
+| `GRID_THICKNESS`   | Thickness of the grid lines                  | `5`               |
+| `OBSTACLES_COLOR`  | The color of obstacles                       | `gray`            |
 
 ## Usage
 

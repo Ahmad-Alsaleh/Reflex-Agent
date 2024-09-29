@@ -95,11 +95,11 @@ class Agent:
         return self._check_obstacle(new_position)
 
     def check_wall_on_left(self) -> bool:
-        new_position = self._calculate_new_position(Direction.RIGHT)
+        new_position = self._calculate_new_position(Direction.LEFT)
         return self._check_obstacle(new_position)
 
     def check_wall_on_right(self) -> bool:
-        new_position = self._calculate_new_position(Direction.LEFT)
+        new_position = self._calculate_new_position(Direction.RIGHT)
         return self._check_obstacle(new_position)
 
     def stop(self) -> None:

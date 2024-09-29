@@ -51,6 +51,7 @@ Game settings can be configured in the `game.config` file. Here are the availabl
 | `GOAL_POSITION`       | Position of the goal on the grid          | -1 and `NUM_OF_CELLS` + 1 are allowed if the goal is on the border of the map | `[3, 6]`                      |
 | `NUM_OF_CELLS`        | Number of cells in the grid               | This is the number of cells per side                                          | `6`                           |
 | `OBSTACLES_POSITIONS` | Positions of each obstacle                | Each [x, y] point corresponds to one obstacle                                 | `[[4, 3], [4, 4], [3, 4]]`    |
+| `ENABLE_STEPS`        | Play the animation step by step           | None                                                                          | `true`                        |
 
 ### Visual Settings (Optional)
 

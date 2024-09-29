@@ -17,6 +17,7 @@ class _Settings(BaseSettings):
     agent_init_position: tuple[int, int]
     obstacles_positions: list[tuple[int, int]]
     obstacles_color: str
+    enable_steps: bool
 
     @property
     def cell_size(self) -> float:

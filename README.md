@@ -41,29 +41,30 @@ Reflex Agent is a simple grid-based game designed for the AI course (CMP 333) at
 
 Game settings can be configured in the `game.config` file. Here are the available settings:
 
-> Note: The `[0, 0]` position is at the bottom-left corner of the grid.
+> Note 1: Both tuples and lists in the `game.config` file should be written using square brackets.
+> Note 2: The `[0, 0]` position is at the bottom-left corner of the grid.
 
 ### Main Settings
 
-| Parameter             | Description                               | Note                                                                          | Default                       |
-|-----------------------|-------------------------------------------|-------------------------------------------------------------------------------|-------------------------------|
-| `AGENT_INIT_POSITION` | Initial position of the agent on the grid | None                                                                          | `[2, 3]`                      |
-| `GOAL_POSITION`       | Position of the goal on the grid          | -1 and `NUM_OF_CELLS` + 1 are allowed if the goal is on the border of the map | `[3, 6]`                      |
-| `NUM_OF_CELLS`        | Number of cells in the grid               | This is the number of cells per side                                          | `6`                           |
-| `OBSTACLES_POSITIONS` | Positions of each obstacle                | Each [x, y] point corresponds to one obstacle                                 | `[[4, 3], [4, 4], [3, 4]]`    |
-| `ENABLE_STEPS`        | Play the animation step by step           | None                                                                          | `true`                        |
+| Parameter             | Type                  | Description                               | Note                                                                          | Default                       |
+|-----------------------|-----------------------|-------------------------------------------|-------------------------------------------------------------------------------|-------------------------------|
+| `AGENT_INIT_POSITION` | tuple[int, int]       | Initial position of the agent on the grid | None                                                                          | `[2, 3]`                      |
+| `GOAL_POSITION`       | tuple[int, int]       | Position of the goal on the grid          | -1 and `NUM_OF_CELLS` + 1 are allowed if the goal is on the border of the map | `[3, 6]`                      |
+| `NUM_OF_CELLS`        | int                   | Number of cells in the grid               | This is the number of cells per side                                          | `6`                           |
+| `OBSTACLES_POSITIONS` | list[tuple[int, int]] | Positions of each obstacle                | Each [x, y] point corresponds to one obstacle                                 | `[[4, 3], [4, 4], [3, 4]]`    |
+| `ENABLE_STEPS`        | bool                  | Play the animation step by step           | None                                                                          | `True`                        |
 
 ### Visual Settings (Optional)
 
-| Parameter          | Description                                  | Default           |
-|--------------------|----------------------------------------------|-------------------|
-| `APP_NAME`         | The name of the window of the application    | `"Reflex Agent"`  |
-| `WINDOW_SIZE`      | Size of the game window                      | `500`             |
-| `BACKGROUND_COLOR` | Background color of the game window          | `"white"`         |
-| `GOAL_COLOR`       | Color of the goal                            | `"green"`         |
-| `GRID_COLOR`       | Color of the grid lines                      | `"gray"`          |
-| `GRID_THICKNESS`   | Thickness of the grid lines                  | `5`               |
-| `OBSTACLES_COLOR`  | The color of obstacles                       | `gray`            |
+| Parameter          | Type | Description                                  | Default           |
+|--------------------|------|----------------------------------------------|-------------------|
+| `APP_NAME`         | str  | The name of the window of the application    | `"Reflex Agent"`  |
+| `WINDOW_SIZE`      | int  | Size of the game window                      | `500`             |
+| `BACKGROUND_COLOR` | str  | Background color of the game window          | `"white"`         |
+| `GOAL_COLOR`       | str  | Color of the goal                            | `"green"`         |
+| `GRID_COLOR`       | str  | Color of the grid lines                      | `"gray"`          |
+| `GRID_THICKNESS`   | int  | Thickness of the grid lines                  | `5`               |
+| `OBSTACLES_COLOR`  | str  | The color of obstacles                       | `gray`            |
 
 ## Usage
 

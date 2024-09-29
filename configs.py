@@ -6,18 +6,18 @@ from pydantic_settings import BaseSettings
 
 
 class _Settings(BaseSettings):
+    agent_init_position: tuple[int, int]
+    goal_position: tuple[int, int]
+    num_of_cells: int
+    obstacles_positions: list[tuple[int, int]]
+    enable_steps: bool
     app_name: str
+    window_size: int
     background_color: str
+    goal_color: str
     grid_color: str
     grid_thickness: int
-    window_size: int
-    num_of_cells: int
-    goal_position: tuple[int, int]
-    goal_color: str
-    agent_init_position: tuple[int, int]
-    obstacles_positions: list[tuple[int, int]]
     obstacles_color: str
-    enable_steps: bool
 
     @property
     def cell_size(self) -> float:

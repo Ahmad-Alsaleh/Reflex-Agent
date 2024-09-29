@@ -46,13 +46,14 @@ Game settings can be configured in the `game.config` file. Here are the availabl
 
 ### Main Settings
 
-| Parameter             | Type                  | Description                               | Note                                                                          | Default                       |
-|-----------------------|-----------------------|-------------------------------------------|-------------------------------------------------------------------------------|-------------------------------|
-| `AGENT_INIT_POSITION` | tuple[int, int]       | Initial position of the agent on the grid | None                                                                          | `[2, 3]`                      |
-| `GOAL_POSITION`       | tuple[int, int]       | Position of the goal on the grid          | -1 and `NUM_OF_CELLS` + 1 are allowed if the goal is on the border of the map | `[3, 6]`                      |
-| `NUM_OF_CELLS`        | int                   | Number of cells in the grid               | This is the number of cells per side                                          | `6`                           |
-| `OBSTACLES_POSITIONS` | list[tuple[int, int]] | Positions of each obstacle                | Each [x, y] point corresponds to one obstacle                                 | `[[4, 3], [4, 4], [3, 4]]`    |
-| `ENABLE_STEPS`        | bool                  | Play the animation step by step           | None                                                                          | `True`                        |
+| Parameter             | Type                                  | Description                               | Note                                                                          | Default                       |
+|-----------------------|---------------------------------------|-------------------------------------------|-------------------------------------------------------------------------------|-------------------------------|
+| `AGENT_INIT_POSITION` | tuple[int, int]                       | Initial position of the agent on the grid | None                                                                          | `[2, 3]`                      |
+| `AGENT_INIT_HEADING`  | one of "up", "down", "right", "left"  | Initial direction of the agent            | None                                                                          | `"up"`                      |
+| `GOAL_POSITION`       | tuple[int, int]                       | Position of the goal on the grid          | -1 and `NUM_OF_CELLS` + 1 are allowed if the goal is on the border of the map | `[3, 6]`                      |
+| `NUM_OF_CELLS`        | int                                   | Number of cells in the grid               | This is the number of cells per side                                          | `6`                           |
+| `OBSTACLES_POSITIONS` | list[tuple[int, int]]                 | Positions of each obstacle                | Each [x, y] point corresponds to one obstacle                                 | `[[4, 3], [4, 4], [3, 4]]`    |
+| `ENABLE_STEPS`        | bool                                  | Play the animation step by step           | None                                                                          | `True`                        |
 
 ### Visual Settings (Optional)
 

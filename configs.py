@@ -1,5 +1,5 @@
 from itertools import chain
-from typing import Self
+from typing import Literal, Self
 
 from pydantic import model_validator
 from pydantic_settings import BaseSettings
@@ -7,6 +7,7 @@ from pydantic_settings import BaseSettings
 
 class _Settings(BaseSettings):
     agent_init_position: tuple[int, int]
+    agent_init_heading: Literal["up", "down", "right", "left"]
     goal_position: tuple[int, int]
     num_of_cells: int
     obstacles_positions: list[tuple[int, int]]

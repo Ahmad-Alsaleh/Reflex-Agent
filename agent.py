@@ -1,6 +1,7 @@
+from contextlib import contextmanager
 import turtle
 from enum import Enum
-from typing import Literal
+from typing import Generator, Literal
 
 from rich import print as pprint
 
@@ -13,12 +14,23 @@ class Direction(Enum):
     LEFT = 90
 
 
+@contextmanager
+def freeze_agent(agent: turtle.Turtle) -> Generator[None, None, None]:
+    agent.penup()
+    turtle.tracer(0)
+    yield
+    agent.pendown()
+    turtle.tracer(1, 70)
+
+
 class Agent:
     def __init__(self) -> None:
         self._agent = turtle.Turtle()
         self._agent.shapesize(2, 2)
         self._current_position = settings.agent_init_position
-        self._go_to_cell(self._current_position)
+        with freeze_agent(self._agent):
+            self._heading = settings.agent_init_heading
+            self._go_to_cell(self._current_position)
 
     def _go_to_cell(self, cell_coordinates: tuple[int, int]) -> None:
         x, y = [
@@ -28,11 +40,7 @@ class Agent:
         if settings.num_of_cells % 2 == 0:
             x += settings.cell_size / 2
             y += settings.cell_size / 2
-        self._agent.penup()
-        turtle.tracer(0)
         self._agent.goto(x, y)
-        self._agent.pendown()
-        turtle.tracer(1, 70)
 
     @property
     def _heading(self) -> Literal[0, 90, 180, 270]:
@@ -42,6 +50,15 @@ class Agent:
                 f"Invalid heading: {heading}. Must be one of `[0, 90, 180, 270]`"
             )
         return heading  # type: ignore[return-value]
+
+    @_heading.setter
+    def _heading(self, direction: Literal["up", "down", "right", "left"]) -> None:
+        heading_map = {"right": 0, "up": 90, "left": 180, "down": 270}
+        angle = heading_map.get(direction)
+        assert (
+            angle is not None
+        ), "heading should be one of `'up', 'down', 'right', 'left'`"
+        self._agent.setheading(angle)
 
     def _check_obstacle(self, position: tuple[int, int]) -> bool:
         if position == settings.goal_position:
